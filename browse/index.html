@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
+    <link rel="stylesheet" href="../assets/browse.16bf6b32.css">
+    <title>Home - Aniflix</title>
+</head><body>
+
+    <header>
+        <div id="header-logo">
+            <img src="../assets/LOGO.svg" alt="ANIFLIX">
+        </div>
+        <a href="">Home</a>
+        <a href="anime">Anime Series</a>
+        <a href="movies">Movies</a>
+        <a href="news">New &amp; Popular</a>
+    </header>
+    <main id="main">
+    <div class="hero-section">
+        <div class="hero-background">
+            <img src="../assets/hero/1.jpg" alt="Tokyo Ghoul">
+        </div>
+
+        
+            
+        
+    </div>
+
+    <div class="anime-logo">
+        <div class="wrapper">
+            <div>
+                <img src="../assets/hero/1-logo.png" alt="Tokyo Ghoul Logo">
+            </div>
+            <a href="">Play</a>
+            <a href="">More Info</a>
+            <h2></h2>
+        </div>
+            
+        </div>
+    
+    <script>
+
+    function disableTab(){
+        const tab = document.getElementById("tab-wrapper");
+        tab.parentNode.removeChild(tab);
+    }
+       
+
+    const api_url = "https://my-json-server.typicode.com/Raia17/animes/db";
+    
+    async function getISS() {
+        const response = await fetch(api_url);
+        const data = await response.json();
+        const shows_data = data.shows;
+    
+        console.log(shows_data[1].show_content[1].title);
+
+        var slidersHeadings = [
+        "Top Séries de Anime", 
+        "Top Filmes de Anime",
+        "Top Mangás"
+        ];
+
+        this.tabs = function(sliderNumber, tabNumber) {
+            const main = document.getElementById("main");
+
+            main.insertAdjacentHTML("beforeend", '<div id="tab-wrapper" onclick="disableTab()"><div class="tab"><div class="tab-hero"><img src="'+ shows_data[sliderNumber].show_content[tabNumber].image +'"  alt="Show-logo"><a href="'+ shows_data[sliderNumber].show_content[tabNumber].trailer +'" target="_blank">Play</a></div><article><h3 class="title">'+ shows_data[sliderNumber].show_content[tabNumber].title +'</h3><h5 class="realese-date">'+ shows_data[sliderNumber].show_content[tabNumber].release +'</h5><p class="desc">'+  shows_data[sliderNumber].show_content[tabNumber].desc +'</p></article></div></div>');
+        }
+
+        function createSliders(slidersAmount, itemsAmount) {
+
+            const slidersContainer = document.getElementById("sliders");
+            
+            
+            for(let i = 1; i <= slidersAmount; i++) {
+                
+                slidersContainer.insertAdjacentHTML("beforeend", '<section id="slider '+ i +'" class="slider"><h2 class="slider-heading">'+ slidersHeadings[i-1] +'</h2><div class="slider-wrapper" id="section'+i+'"><span class="slider-handler next" onclick="handlerAction('+i+', 1)">🢂</span><span class="slider-handler previous" onclick="handlerAction('+ i +', 0)">🢀</span></section>')
+                const slider = document.getElementById("section"+i);
+
+                for (let j = 1; j <= itemsAmount; j++) {
+                    let imagesPath = "../../public/assets/browse/" + j + ".jpg";
+
+                    slider.insertAdjacentHTML("beforeend", 
+                    '<div class="slider-item '+j+'" onclick="tabs('+ (i-1) +','+ (j-1) +')"><div class="box-art"><h3 class="box-title">'+ shows_data[i-1].show_content[j-1].title +'</h3><img src="'+ shows_data[i-1].show_content[j-1].image +'" alt=""></div></div>')
+
+                }
+            }
+        }
+
+         createSliders(2,8);
+    }
+
+    var temp = 0;
+
+    function handlerAction(sliderNumber, option) {
+        const sli = document.getElementById("slider "+sliderNumber);
+        
+
+        if (option === 0) {
+            temp -= 200;
+            sli.scrollLeft -= 20;
+            /* var translate = "translateX("+temp+"px)";
+            sli.style.transform = translate; */
+        } else if (option === 1) {
+            sli.scrollRight += 20;
+            /* var translate = "translateX("+temp+"px)";
+            sli.style.transform = translate; */
+        }
+
+    }
+
+    
+
+   getISS();
+
+    </script><section id="sliders">
+
+        <!-- AQUI -->
+    
+    </section>
+
+
+    </main>
+    <footer>
+        <ul>
+            <li><a href="">Perguntas frequentes</a></li>
+            <li><a href="">Informações sobre a empresa</a></li>
+            <li><a href="">Centro de assistência</a></li>
+        </ul>
+    </footer>
+
+</body></html>
