@@ -1,4 +1,4 @@
-# edicao-grafica-vue
+# Aniflix
 
 ## Project setup
 ```
